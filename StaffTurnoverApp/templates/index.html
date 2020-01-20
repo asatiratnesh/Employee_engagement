@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Staff Turnover</a>
+      <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Dashboard <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="nav-scroller bg-white box-shadow">
+      <nav class="nav nav-underline">
+        <a class="nav-link active" href="https://getbootstrap.com/docs/4.0/examples/offcanvas/#">Dashboard</a>
+        <a class="nav-link" href="#">Explore</a>
+      </nav>
+    </div>
+
+    <main role="main" class="container">
+      <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
+        <div class="lh-100">
+          <h6 class="mb-0 text-white lh-100">Bootstrap</h6>
+          <small>Since 2011</small>
+        </div>
+      </div>
+
+      <div class="my-3 p-3 bg-white rounded box-shadow">
+        <div class="wrap-input">
+          <form class="login100-form validate-form"  method="post" enctype="multipart/form-data" action="{% url 'saveUserInfo' %}" >
+            {% csrf_token %}
+            <span class="login100-form-title p-b-48">
+            <i class="zmdi zmdi-font"></i>
+            </span>
+            <div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
+              <input class="input100" type="text" name="email">
+              <span class="focus-input100" data-placeholder="Email Id"></span>
+            </div>
+            <div class="wrap-input100 validate-input" data-validate="Enter organization name">
+              <input class="input100" type="text" name="organization">
+              <span class="focus-input100" data-placeholder="Organization Name"></span>
+            </div>
+            <div class="wrap-input100 validate-input" data-validate="Select file">
+              <input class="input100 input200" type="file" name="employee_data">
+              <span class="file-name"></span>
+              <span class="focus-input100" data-placeholder="Upload employee data"></span>
+            </div>
+            <div class="container-login100-form-btn">
+              <div class="wrap-login100-form-btn">
+              <div class="login100-form-bgbtn"></div>
+              <button class="login100-form-btn" type="submit">  Submit </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+{% endblock %}

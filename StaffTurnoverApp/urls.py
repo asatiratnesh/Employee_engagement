@@ -5,4 +5,6 @@ from StaffTurnoverApp import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('saveUserInfo/', views.saveUserInfo, name='saveUserInfo'),
+
 ]
