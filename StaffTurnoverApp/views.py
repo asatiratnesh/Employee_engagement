@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import UserInfo,EmplData
 import csv
-from io import TextIOWrapper
-
+from StaffTurnoverApp.functions import *
 
 def index(request):
     return render(request, 'index.html')
@@ -15,7 +14,6 @@ def saveUserInfo(request):
         user_info.save()
         file_reader = TextIOWrapper(request.FILES['employee_data'].file, encoding=request.encoding)
         reader = csv.reader(file_reader)
-        print('csv obj------------------------', reader)
         emp_data= EmplData()
         # emp_data.userId =
         next(reader, None)
@@ -59,4 +57,6 @@ def saveUserInfo(request):
                     userId=UserInfo.objects.latest('id')
                 )
                 # print(row[0],row[1],row[2])
-    return redirect('index')
+
+    graphic = staffTurnoverResult(reader)
+    return render(request, 'prediction_dashboard.html', {'graphic':graphic})

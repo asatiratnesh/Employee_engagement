@@ -459,3 +459,68 @@ button:hover {
 .input200{
   opacity: 0;
 }
+.progress{
+
+}
+.progress-bar {
+  width: 0;
+  -webkit-animation: progress 1.5s ease-in-out forwards;
+  animation: progress 1.5s ease-in-out forwards;
+}
+.progress-bar .title {
+  opacity: 0;
+  -webkit-animation: show 0.35s forwards ease-in-out 0.5s;
+  animation: show 0.35s forwards ease-in-out 0.5s;
+}
+
+@-webkit-keyframes progress {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes progress {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@-webkit-keyframes show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.purple{
+  background: #7d3cff;
+}
+.red{
+  background: #c80e13;
+}
+.blue{
+  background: #39a0ca;
+}
+.yellow{
+  background: #f2d53c;
+}
+.green{
+  background: #9bc400;
+}
+.pink{
+  background: #ff5e6c;
+}
