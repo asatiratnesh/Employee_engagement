@@ -6,7 +6,22 @@ body {
 body {
   padding-top: 56px;
 }
-
+.navbar-brand{
+  font-family: cursive;
+  font-weight: 600;
+  text-decoration: overline;
+  font-size: 22px;
+  letter-spacing: 10px;
+}
+.fixed-top{
+  background: #42aac1;
+}
+.navbar-brand span{
+  margin-top: 4px;
+  position: absolute;
+  letter-spacing: 2px;
+  margin-left: -8px;
+}
 @media (max-width: 767.98px) {
   .offcanvas-collapse {
     position: fixed;
@@ -523,4 +538,23 @@ button:hover {
 }
 .pink{
   background: #ff5e6c;
+}
+
+.purple-tx{
+  color: #7d3cff;
+}
+.red-tx{
+  color: #c80e13;
+}
+.blue-tx{
+  color: #39a0ca;
+}
+.yellow-tx{
+  color: #f2d53c;
+}
+.green-tx{
+  color: #9bc400;
+}
+.pink-tx{
+  color: #ff5e6c;
 }
