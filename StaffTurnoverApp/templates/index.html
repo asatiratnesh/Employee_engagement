@@ -13,7 +13,7 @@
     <main role="main" class="container">
       <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
         <div class="lh-100">
-          <h6 class="mb-0 text-white lh-100">Welcome to Flooretest</h6>
+          <h6 class="mb-0 text-white lh-100">Welcome to Pay & Reap</h6>
         </div>
       </div>
 
@@ -33,16 +33,142 @@
               <span class="focus-input100" data-placeholder="Organization Name"></span>
             </div>
             <div class="wrap-input100 validate-input" data-validate="Select file">
-              <input class="input100 input200" type="file" name="employee_data">
+              <input class="input100 input200" id="uploadEmp" type="file" name="employee_data">
               <span class="file-name"></span>
               <span class="focus-input100" data-placeholder="Upload employee data"></span>
             </div>
+            <table id="empTable">
+<tr>
+  <td align="right">Age</td><td><label>
+
+    </label></td></tr>
+<tr>
+                <td align="right">DailyRate</td><td><label>
+
+    </label></td></tr>
+<tr>
+                <td align="right">DistanceFromHome</td><td><label>
+
+    </label></td></tr>
+<tr>
+                <td align="right">EnvironmentSatisfaction</td><td><label>
+
+    </label></td></tr>
+<tr>
+                <td align="right">JobLevel</td><td><label>
+
+    </label></td></tr>
+<tr>
+                <td align="right">JobRole</td><td><label>
+
+    </label></td></tr>
+<tr>
+                <td align="right">MaritalStatus</td><td><label>
+
+    </label></td></tr>
+<tr>
+                <td align="right">MonthlyIncome</td><td><label>
+
+    </label></td></tr>
+<tr>
+                <td align="right">OverTime</td><td><label>
+
+    </label></td></tr>
+<tr>
+                <td align="right">PercentSalaryHike</td><td><label>
+
+    </label></td></tr>
+<tr>
+    <td align="right">RelationshipSatisfaction</td><td><label>
+
+    </label></td></tr>
+<tr>
+    <td align="right">TotalWorkingYears</td><td><label>
+
+    </label></td></tr>
+
+        <tr>
+            <td><button class="btn-primary" id="autoselect" tpye="button" style="float:right">  AutoSelect </button></td>
+    </tr>
+
+</table>
+
+   <script src="https://d3js.org/d3.v3.js"></script>
+              <script type='text/javascript'>
+document.getElementById("empTable").style.display = "none";
+
+document.getElementById('uploadEmp').onchange = function(e) {
+upload(e);
+function upload(e) {
+
+
+       var data = null;
+       var file = e.target.files[0];
+
+       var reader = new FileReader();
+       reader.readAsText(file);
+       reader.onload = function (event) {
+           var csvData = event.target.result;
+
+           var parsedCSV = d3.csv.parseRows(csvData);
+
+           parsedCSV.forEach(function (d, i) {
+           if(i==0){
+           createForm(d)
+           }
+           });
+
+       }
+   }
+
+   function createForm(csv){
+    console.log(csv);
+
+//Create and append select list
+
+var selectList = document.createElement("select");
+selectList.name="features";
+selectList.required="true"
+var option = document.createElement("option");
+    option.text = "--select--";
+     selectList.appendChild(option);
+//Create and append the options
+ for (var i in csv) {
+
+    var option = document.createElement("option");
+    option.value = csv[i];
+    option.text = csv[i];
+    selectList.appendChild(option);
+
+}
+var $myParent=document.getElementsByTagName("label");
+for ( i=0;i<$myParent.length;i++) {
+$myParent[i].appendChild(selectList.cloneNode(true));
+}
+
+
+document.getElementById("empTable").style.display = "block";
+document.getElementById("autoselect").onclick = function(){
+           var $myParent=document.getElementsByTagName("select");
+            for ( i=0;i<=csv.length;i++) {
+            $myParent[i].options[i+1].defaultSelected = true;
+}
+   }
+
+
+   }
+
+
+
+}
+</script>
             <div class="container-login100-form-btn">
               <div class="wrap-login100-form-btn">
               <div class="login100-form-bgbtn"></div>
               <button class="login100-form-btn" type="submit">  Submit </button>
               </div>
             </div>
+
           </form>
         </div>
       </div>
