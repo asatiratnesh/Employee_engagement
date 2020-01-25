@@ -88,7 +88,7 @@
     </label></td></tr>
 
         <tr>
-            <td><button class="btn-primary" id="autoselect" tpye="button" style="float:right">  AutoSelect </button></td>
+            <td><button class="btn-primary" id="autoselect" tpye="button" style="float:right" onsubmit="return false">  AutoSelect </button></td>
     </tr>
 
 </table>
@@ -148,11 +148,14 @@ $myParent[i].appendChild(selectList.cloneNode(true));
 
 
 document.getElementById("empTable").style.display = "block";
-document.getElementById("autoselect").onclick = function(){
+document.getElementById("autoselect").onclick = function(e){
+ e.preventDefault();
            var $myParent=document.getElementsByTagName("select");
             for ( i=0;i<=csv.length;i++) {
             $myParent[i].options[i+1].defaultSelected = true;
 }
+ return false;
+
    }
 
 
