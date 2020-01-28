@@ -558,3 +558,8 @@ button:hover {
 .pink-tx{
   color: #ff5e6c;
 }
+
+.columns-dropdown{
+  padding: 24px 0;
+  margin-top: -30px;
+}

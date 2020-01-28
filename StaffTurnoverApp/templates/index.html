@@ -37,144 +37,165 @@
               <span class="file-name"></span>
               <span class="focus-input100" data-placeholder="Upload employee data"></span>
             </div>
-            <table id="empTable">
-<tr>
-  <td align="right">Age</td><td><label>
 
-    </label></td></tr>
-<tr>
-                <td align="right">DailyRate</td><td><label>
+            <div id="empTable" class="row">
+              <div class="col-md-4">
+                <label class="float-right" >Age</label>
+              </div>
+              <div class="col-md-6">
+                <div class="columns-dropdown"></div>
+              </div>
 
-    </label></td></tr>
-<tr>
-                <td align="right">DistanceFromHome</td><td><label>
+              <div class="col-md-4">
+                <label class="float-right" >DailyRate</label>
+              </div>
+              <div class="col-md-6">
+                <div class="columns-dropdown"></div>
+              </div>
 
-    </label></td></tr>
-<tr>
-                <td align="right">EnvironmentSatisfaction</td><td><label>
+              <div class="col-md-4">
+                <label class="float-right" >DistanceFromHome</label>
+              </div>
+              <div class="col-md-6">
+                <div class="columns-dropdown"></div>
+              </div>
 
-    </label></td></tr>
-<tr>
-                <td align="right">JobLevel</td><td><label>
+              <div class="col-md-4">
+                <label class="float-right" >EnvironmentSatisfaction</label>
+              </div>
+              <div class="col-md-6">
+                <div class="columns-dropdown"></div>
+              </div>
 
-    </label></td></tr>
-<tr>
-                <td align="right">JobRole</td><td><label>
+              <div class="col-md-4">
+                <label class="float-right">JobLevel</label>
+              </div>
+              <div class="col-md-6">
+                <div class="columns-dropdown"></div>
+              </div>
 
-    </label></td></tr>
-<tr>
-                <td align="right">MaritalStatus</td><td><label>
+              <div class="col-md-4">
+                <label class="float-right" >JobRole</label>
+              </div>
+              <div class="col-md-6">
+                <div class="columns-dropdown"></div>
+              </div>
 
-    </label></td></tr>
-<tr>
-                <td align="right">MonthlyIncome</td><td><label>
+              <div class="col-md-4">
+                <label class="float-right" >MaritalStatus</label>
+              </div>
+              <div class="col-md-6">
+                <div class="columns-dropdown"></div>
+              </div>
 
-    </label></td></tr>
-<tr>
-                <td align="right">OverTime</td><td><label>
+              <div class="col-md-4">
+                <label class="float-right" >MonthlyIncome</label>
+              </div>
+              <div class="col-md-6">
+                <div class="columns-dropdown"></div>
+              </div>
 
-    </label></td></tr>
-<tr>
-                <td align="right">PercentSalaryHike</td><td><label>
+              <div class="col-md-4">
+                <label class="float-right" >OverTime</label>
+              </div>
+              <div class="col-md-6">
+                <div class="columns-dropdown"></div>
+              </div>
 
-    </label></td></tr>
-<tr>
-    <td align="right">RelationshipSatisfaction</td><td><label>
+              <div class="col-md-4">
+                <label class="float-right" >PercentSalaryHike</label>
+              </div>
+              <div class="col-md-6">
+                <div class="columns-dropdown"></div>
+              </div>
 
-    </label></td></tr>
-<tr>
-    <td align="right">TotalWorkingYears</td><td><label>
+              <div class="col-md-4">
+                <label class="float-right" >RelationshipSatisfaction</label>
+              </div>
+              <div class="col-md-6">
+                <div class="columns-dropdown"></div>
+              </div>
 
-    </label></td></tr>
+              <div class="col-md-4">
+                <label class="float-right" >TotalWorkingYears</label>
+              </div>
+              <div class="col-md-6">
+                <div class="columns-dropdown"></div>
+              </div>
+              <div class="col-md-4 offset-md-8 container-login100-form-btn">
+                <div class="wrap-login100-form-btn">
+                <div class="login100-form-bgbtn"></div>
+                <button type="button" id="autoselect" class="login100-form-btn">Auto Map</button>
+                </div>
+              </div>
+            </div>
 
-        <tr>
-            <td><button class="btn-primary" id="autoselect" tpye="button" style="float:right" onsubmit="return false">  AutoSelect </button></td>
-    </tr>
+            <div class="container-login100-form-btn">
+              <div class="wrap-login100-form-btn">
+              <div class="login100-form-bgbtn"></div>
+                <button class="login100-form-btn" type="submit">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
 
-</table>
+<script src="https://d3js.org/d3.v3.js"></script>
+<script type='text/javascript'>
+  var columns_name = ["age", "dailyRate", "distanceFromHome", "environmentSatisfaction", "jobLevel",
+  "jobRole", "maritalStatus", "monthlyIncome", "overTime", "percentSalaryHike", "relationshipSatisfaction",
+  "totalWorkingYears"];
 
-   <script src="https://d3js.org/d3.v3.js"></script>
-              <script type='text/javascript'>
-document.getElementById("empTable").style.display = "none";
-
-document.getElementById('uploadEmp').onchange = function(e) {
-upload(e);
-function upload(e) {
-
-
+  document.getElementById("empTable").style.display = "none";
+  document.getElementById('uploadEmp').onchange = function(e) {
+    upload(e);
+    function upload(e) {
        var data = null;
        var file = e.target.files[0];
 
        var reader = new FileReader();
        reader.readAsText(file);
        reader.onload = function (event) {
-           var csvData = event.target.result;
-
-           var parsedCSV = d3.csv.parseRows(csvData);
-
-           parsedCSV.forEach(function (d, i) {
-           if(i==0){
-           createForm(d)
-           }
-           });
-
+         var csvData = event.target.result;
+         var parsedCSV = d3.csv.parseRows(csvData);
+         createForm(parsedCSV[0]);
        }
-   }
+     }
 
-   function createForm(csv){
-    console.log(csv);
+     function createForm(csv){
+      //Create and append select list
+      var selectList = document.createElement("select");
+      selectList.required="true";
+      selectList.className = "input100";
+      var option = document.createElement("option");
+      option.text = "--select--";
+      selectList.appendChild(option);
+      //Create and append the options
+      for (var i in csv) {
+        var option = document.createElement("option");
+        option.value = csv[i];
+        option.text = csv[i];
+        selectList.appendChild(option);
+      }
+      var $myParent=document.getElementsByClassName("columns-dropdown");
+      for ( i=0;i<$myParent.length;i++) {
+        var cloneSelectList = selectList.cloneNode(true);
+        cloneSelectList.name = columns_name[i];
+        $myParent[i].appendChild(cloneSelectList);
+      }
 
-//Create and append select list
-
-var selectList = document.createElement("select");
-selectList.name="features";
-selectList.required="true"
-var option = document.createElement("option");
-    option.text = "--select--";
-     selectList.appendChild(option);
-//Create and append the options
- for (var i in csv) {
-
-    var option = document.createElement("option");
-    option.value = csv[i];
-    option.text = csv[i];
-    selectList.appendChild(option);
-
-}
-var $myParent=document.getElementsByTagName("label");
-for ( i=0;i<$myParent.length;i++) {
-$myParent[i].appendChild(selectList.cloneNode(true));
-}
-
-
-document.getElementById("empTable").style.display = "block";
-document.getElementById("autoselect").onclick = function(e){
- e.preventDefault();
-           var $myParent=document.getElementsByTagName("select");
-            for ( i=0;i<=csv.length;i++) {
-            $myParent[i].options[i+1].defaultSelected = true;
-}
- return false;
-
-   }
-
-
-   }
-
-
-
-}
+      document.getElementById("empTable").style.display = "flex";
+      document.getElementById("autoselect").onclick = function(e){
+      e.preventDefault();
+      var $myParent=document.getElementsByTagName("select");
+      for ( i=0;i<=csv.length;i++) {
+        $myParent[i].options[i+1].defaultSelected = true;
+      }
+      return false;
+      }
+    }
+  }
 </script>
-            <div class="container-login100-form-btn">
-              <div class="wrap-login100-form-btn">
-              <div class="login100-form-bgbtn"></div>
-              <button class="login100-form-btn" type="submit">  Submit </button>
-              </div>
-            </div>
-
-          </form>
-        </div>
-      </div>
-    </main>
 
 {% endblock %}

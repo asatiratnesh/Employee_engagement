@@ -8,7 +8,7 @@ def index(request):
 
 def saveUserInfo(request):
     if request.method == 'POST':
-        # user_info = UserInfo()
+        #user_info = UserInfo()
         # user_info.email = request.POST['email']
         # user_info.companyName = request.POST['organization']
         # user_info.save()
@@ -16,10 +16,23 @@ def saveUserInfo(request):
         # reader = csv.reader(file_reader)
         # next(reader, None)
         # graphic = staffTurnoverResult(reader)
+        columns_mapping_dict = {}
+        columns_mapping_dict["age"] = request.POST['age']
+        columns_mapping_dict["dailyRate"] = request.POST['dailyRate']
+        columns_mapping_dict["distanceFromHome"] = request.POST['distanceFromHome']
+        columns_mapping_dict["environmentSatisfaction"] = request.POST['environmentSatisfaction']
+        columns_mapping_dict["jobLevel"] = request.POST['jobLevel']
+        columns_mapping_dict["jobRole"] = request.POST['jobRole']
+        columns_mapping_dict["maritalStatus"] = request.POST['maritalStatus']
+        columns_mapping_dict["monthlyIncome"] = request.POST['monthlyIncome']
+        columns_mapping_dict["overTime"] = request.POST['overTime']
+        columns_mapping_dict["percentSalaryHike"] = request.POST['percentSalaryHike']
+        columns_mapping_dict["relationshipSatisfaction"] = request.POST['relationshipSatisfaction']
+        columns_mapping_dict["totalWorkingYears"] = request.POST['totalWorkingYears']
 
         emp_data_csv = request.FILES['employee_data']
         emp_data_dataframe = pd.read_csv(emp_data_csv)
-        graphic = staffTurnoverResult(emp_data_dataframe)
+        graphic = staffTurnoverResult(columns_mapping_dict, emp_data_dataframe)
         # emp_data= EmplData()
         # for row in reader:
         #         empl_data = EmplData.objects.create(
