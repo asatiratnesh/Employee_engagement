@@ -11,11 +11,11 @@
 
     <main role="main" class="container">
       <div class="row">
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
           <div class="my-3 bg-white rounded box-shadow" width="100%">
             <img src="data:image/png;base64,{{ graphic|safe }}">
           </div>
-        </div>
+        </div> -->
       </div>
 
 
@@ -23,41 +23,76 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>Employee Number(Id)</th>
-              <th>Department</th>
-              <th>Job role</th>
-              <th>Turnover Rate</th>
+              <th>Employee Number</th>
+              <th>Monthly Income</th>
+              <th>Total Working Years</th>
+              <th>Job Role</th>
+              <th>Age</th>
+              <th>Predicted values</th>
+              <th>Cost Reduction</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>12</td>
-              <td>Research & Development</td>
-              <td>Research Scientist</td>
-              <td>
-                <div class="progress">
-                  <div class="progress-bar pink" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="max-width: 60%">
-                  <span class="title">60%</span>
-                  </div>
-                </div>
-              </td>
-            </tr>
+              {% for key, data in df_top_five.items %}
+                <tr data-id="{{data.EmployeeNumber}}">
+                  <td>{{data.EmployeeNumber}}</td>
+                  <td>{{data.MonthlyIncome}}</td>
+                  <td>{{data.TotalWorkingYears}}</td>
+                  <td>{{data.JobRole}}</td>
+                  <td>{{data.Age}}</td>
 
-            <tr>
-              <td>12</td>
-              <td>Research & Development</td>
-              <td>Research Scientist</td>
-              <td>
-                <div class="progress">
-                  <div class="progress-bar blue" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="max-width: 80%">
-                  <span class="title">80%</span>
-                  </div>
-                </div>
-              </td>
-            </tr>
+                  <td>
+                    {% if data.predicted_values > 66 %}
+                      <div class="progress">
+                        <div class="progress-bar red" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="max-width:{{data.predicted_values}}%">
+                          <span class="title">{{data.predicted_values}}%</span>
+                        </div>
+                      </div>
+                    {% elif data.predicted_values > 33 %}
+                        <div class="progress">
+                          <div class="progress-bar yellow" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="max-width:{{data.predicted_values}}%">
+                            <span class="title">{{data.predicted_values}}%</span>
+                          </div>
+                        </div>
+                    {% else %}
+                      <div class="progress">
+                        <div class="progress-bar blue" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="max-width:{{data.predicted_values}}%">
+                          <span class="title">{{data.predicted_values}}%</span>
+                        </div>
+                      </div>
+                    {% endif %}
+
+                  </td>
+                  <td>{{data.cost_reduction}}</td>
+                </tr>
+
+              {% endfor %}
           </tbody>
         </table>
       </div>
     </main>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
+    <!-- <script type="text/javascript">
+
+    $('tbody tr').click(function(){
+    var catid;
+    data_id = $(this).attr("data-id");
+    alert(data_id)
+    $.ajax(
+    {
+       type:"GET",
+       url: "/graphEmp",
+       data:{
+            data_id: data_id
+       },
+       success: function( data )
+       {
+         alert(3333333)
+           $( '#message' ).text(data);
+       }
+     })
+
+  });
+  </script> -->
 {% endblock %}
