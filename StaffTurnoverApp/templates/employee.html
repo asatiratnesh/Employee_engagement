@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="nav-scroller bg-white box-shadow">
+      <nav class="nav nav-underline">
+        <a class="nav-link" href="{% url 'index' %}">Organization</a>
+        <a class="nav-link active" href="{% url 'employee' %}">Employee</a>
+      </nav>
+    </div>
+
+    <main role="main" class="container">
+      <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
+        <div class="lh-100">
+          <h6 class="mb-0 text-white lh-100">Enter Employee data</h6>
+        </div>
+      </div>
+
+      <div class="my-3 p-3 bg-white rounded box-shadow">
+        <div class="wrap-input p-3">
+          <form class="login100-form validate-form"  method="post" enctype="multipart/form-data" action="{% url 'saveEmpInfo' %}" >
+            {% csrf_token %}
+            <div class="wrap-input100 validate-input" data-validate="Enter Age">
+              <input class="input100" type="text" name="Age">
+              <span class="focus-input100" data-placeholder="Age"></span>
+            </div>
+              <div class="wrap-input100 validate-input" data-validate="Enter Daily Rate">
+              <input class="input100" type="text" name="DailyRate">
+              <span class="focus-input100" data-placeholder="DailyRate"></span>
+            </div>
+              <div class="wrap-input100 validate-input" data-validate="Enter Distance From Home">
+              <input class="input100" type="text" name="DistanceFromHome">
+              <span class="focus-input100" data-placeholder="DistanceFromHome"></span>
+            </div>
+              <div class="wrap-input100 validate-input" data-validate="Enter Environment Satisfaction">
+              <input class="input100" type="text" name="EnvironmentSatisfaction">
+              <span class="focus-input100" data-placeholder="EnvironmentSatisfaction"></span>
+            </div>
+              <div class="wrap-input100 validate-input" data-validate="Enter Job Level">
+              <input class="input100" type="text" name="JobLevel">
+              <span class="focus-input100" data-placeholder="JobLevel"></span>
+            </div>
+
+              <div class="wrap-input100 validate-input" data-validate="Enter Job Role">
+              <input class="input100" type="text" name="JobRole">
+              <span class="focus-input100" data-placeholder="JobRole"></span>
+            </div>
+
+
+                <div class="wrap-input100 validate-input" data-validate="Enter Marital Status">
+              <input class="input100" type="text" name="MaritalStatus">
+              <span class="focus-input100" data-placeholder="MaritalStatus"></span>
+            </div>
+
+                             <div class="wrap-input100 validate-input" data-validate="Enter Monthly Income">
+              <input class="input100" type="text" name="MonthlyIncome">
+              <span class="focus-input100" data-placeholder="MonthlyIncome"></span>
+            </div>
+
+            <div class="wrap-input100 validate-input" data-validate="Enter Over Time">
+              <input class="input100" type="text" name="OverTime">
+              <span class="focus-input100" data-placeholder="OverTime"></span>
+            </div>
+
+               <div class="wrap-input100 validate-input" data-validate="Enter Percent Salary Hike">
+              <input class="input100" type="text" name="PercentSalaryHike">
+              <span class="focus-input100" data-placeholder="PercentSalaryHike"></span>
+            </div>
+
+               <div class="wrap-input100 validate-input" data-validate="Enter Relationship Satisfaction">
+              <input class="input100" type="text" name="RelationshipSatisfaction">
+              <span class="focus-input100" data-placeholder="RelationshipSatisfaction"></span>
+            </div>
+
+               <div class="wrap-input100 validate-input" data-validate="Enter Total Working Years">
+              <input class="input100" type="text" name="TotalWorkingYears">
+              <span class="focus-input100" data-placeholder="TotalWorkingYears"></span>
+            </div>
+
+
+            <div class="container-login100-form-btn">
+              <div class="wrap-login100-form-btn">
+              <div class="login100-form-bgbtn"></div>
+                <button class="login100-form-btn" type="submit">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+{% endblock %}
