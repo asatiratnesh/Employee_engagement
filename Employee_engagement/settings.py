@@ -84,7 +84,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'empl_engagement_db',
-        'USER': 'root',
+        'USER': 'niraj',
         'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': 3306,
