@@ -2,13 +2,6 @@
 
 {% block content %}
 
-    <div class="nav-scroller bg-white box-shadow">
-      <nav class="nav nav-underline">
-        <a class="nav-link active" href="https://getbootstrap.com/docs/4.0/examples/offcanvas/#">Dashboard</a>
-        <a class="nav-link" href="#">Explore</a>
-      </nav>
-    </div>
-
     <main role="main" class="container">
       <div class="row">
         <!-- <div class="col-md-6">
@@ -34,8 +27,9 @@
           </thead>
           <tbody>
               {% for key, data in df_top_five.items %}
-                <tr data-id="{{data.EmployeeNumber}}">
-                  <td>{{data.EmployeeNumber}}</td>
+
+                <tr data-id="{{key}}" data-toggle="modal" data-target="#myModal">
+                  <td>{{key}}</td>
                   <td>{{data.MonthlyIncome}}</td>
                   <td>{{data.TotalWorkingYears}}</td>
                   <td>{{data.JobRole}}</td>
@@ -65,34 +59,60 @@
                   </td>
                   <td>{{data.cost_reduction}}</td>
                 </tr>
-
               {% endfor %}
           </tbody>
         </table>
       </div>
+
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Main Factor</h5>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" >
+              <div class="loader" style="display: none; text-align: center;">
+                <div class="spinner-grow text-success" style="width: 4rem; height: 4rem;"></div>
+              </div>
+              <div id='lime-graph'></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    {% load static %}
 
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
 
     $('tbody tr').click(function(){
-    var catid;
-    data_id = $(this).attr("data-id");
-    alert(data_id)
-    $.ajax(
-    {
-       type:"GET",
-       url: "/graphEmp",
-       data:{
-            data_id: data_id
-       },
-       success: function( data )
-       {
-         alert(3333333)
-           $( '#message' ).text(data);
-       }
-     })
+      $('#myModal').modal('show');
+      $('.loader').show()
+      empl_id = $(this).attr("data-id");
+      $('#lime-graph').empty()
 
-  });
-  </script> -->
+      $.ajax({
+        url : "emplLimeGraph/", // the endpoint
+        type : "POST", // http method
+        data : { csrfmiddlewaretoken: '{{ csrf_token }}',
+          empl_id : empl_id
+        }, // data sent with the post request
+
+        success : function(response) {
+          $('.loader').hide()// remove the value from the input
+          $('#lime-graph').load("/static/"+response+".html");
+          console.log("success"); // another sanity check
+        },
+
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+      })
+    });
+
+    </script>
 {% endblock %}

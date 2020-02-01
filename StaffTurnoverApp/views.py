@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from .models import UserInfo,EmplData
 import csv
 from StaffTurnoverApp.functions import *
+from django.core.files.storage import default_storage
 
 def index(request):
     return render(request, 'index.html')
@@ -32,7 +34,9 @@ def saveUserInfo(request):
 
         emp_data_csv = request.FILES['employee_data']
         emp_data_dataframe = pd.read_csv(emp_data_csv)
-        result_df, df_top_five = staffTurnoverResult(columns_mapping_dict, emp_data_dataframe)
+        default_storage.delete("empl_data.csv")
+        file_name = default_storage.save("empl_data.csv", emp_data_csv)
+        df_top_five = staffTurnoverResult(columns_mapping_dict)
         # emp_data= EmplData()
         # for row in reader:
         #         empl_data = EmplData.objects.create(
@@ -74,7 +78,7 @@ def saveUserInfo(request):
         #             userId=UserInfo.objects.latest('id')
         #         )
                 # print(row[0],row[1],row[2])
-    return render(request, 'prediction_dashboard.html', {'predict_df':result_df.to_dict('index'), 'df_top_five': df_top_five.to_dict('index')})
+    return render(request, 'prediction_dashboard.html', {'df_top_five': df_top_five.to_dict('index')})
 
 
 def employee(request):
@@ -99,3 +103,9 @@ def saveEmpInfo(request):
         emp_data_dataframe = pd.read_csv(emp_data_csv)
         graphic = staffTurnoverResult(columns_mapping_dict, emp_data_dataframe)
     return render(request, 'prediction_dashboard.html', {'graphic': graphic})
+
+
+def emplLimeGraph(request):
+    if request.method == 'POST':
+        val= limeGraph(request.POST['empl_id'])
+    return HttpResponse(request.POST['empl_id'])

@@ -1,13 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="nav-scroller bg-white box-shadow">
-      <nav class="nav nav-underline">
-        <a class="nav-link active" href="{% url 'index' %}">Organization</a>
-        <a class="nav-link" href="{% url 'employee' %}">Employee</a>
-      </nav>
-    </div>
-
     <main role="main" class="container">
       <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
         <div class="lh-100">
@@ -36,7 +29,7 @@
               <span class="focus-input100" data-placeholder="Upload employee data"></span>
             </div>
 
-            <div id="empTable" class="row">
+            <div id="empTable" class="row" style='display:none;'>
               <div class="col-md-4">
                 <label class="float-right" >Age</label>
               </div>

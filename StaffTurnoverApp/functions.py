@@ -18,7 +18,7 @@ from sklearn.model_selection import train_test_split
 #import squarify
 
 
-def staffTurnoverResult(columns_mapping_dict, emp_data):
+def staffTurnoverResult(columns_mapping_dict):
     # ml code goed here
     # df = emp_data
     # df['Gender'].replace({'Male': 0, 'Female': 1},inplace = True)
@@ -58,7 +58,7 @@ def staffTurnoverResult(columns_mapping_dict, emp_data):
     #         empl_count_per_job[i] = 1
     # treemap_empl_job = plotEmplVsJob(empl_count_per_job);
 
-    return limeGraph(emp_data)
+    return limeGraph()
 
 
 def plotEmplVsJob(empl_count_per_job):
@@ -79,7 +79,8 @@ def plotEmplVsJob(empl_count_per_job):
 
 
 
-def limeGraph(empl_data):
+def limeGraph(empl_id=None):
+    empl_data = pd.read_csv(settings.MEDIA_ROOT+"empl_data.csv")
     df = empl_data
     df['Attrition'].replace({'No': 0, 'Yes': 1},inplace = True)
     df['Gender'].replace({'Male': 0, 'Female': 1},inplace = True)
@@ -107,36 +108,30 @@ def limeGraph(empl_data):
                                oob_score=False, random_state=10)
     RF = model1.fit(x_train, y_train)
     score = model1.score(x_test, y_test)
-    print('Random Forest model score is %0.4f' %score)
-    y_predicted = RF.predict(x_test)
+    # y_predicted = RF.predict(x_test)
+    y_predicted = RF.predict_proba(x_test)[:,1]
 
     sortignDF = x_test
     sortignDF["y_predicted"] = y_predicted
 
-    #dd = sortignDF.loc[sortignDF['y_predicted'] == 1]
-    # for i in range(19):
-    #     predict_fn_rf = lambda x: RF.predict_proba(x).astype(float)
-    #     X = x_train.values
-    #     explainer = lime.lime_tabular.LimeTabularExplainer(X,feature_names = x_train.columns,class_names=['No','Yes'],kernel_width=5)
-    #     choosen_instance = x.loc[[i]].values[0]
-    #     exp = explainer.explain_instance(choosen_instance, predict_fn_rf,num_features=10)
-    #     exp.show_in_notebook(show_all=False)
-    #     print("dsfadsfsdfdfsdf", i)
-    #     path = settings.MEDIA_ROOT+"'"
-    #     print(path+i+".html")
-    #     exp.save_to_file(path+i+".html")
+    if empl_id is not None:
+        predict_fn_rf = lambda x: RF.predict_proba(x).astype(float)
+        X = x_train.values
+        explainer = lime.lime_tabular.LimeTabularExplainer(X,feature_names = x_train.columns,class_names=['No','Yes'],kernel_width=5)
+        choosen_instance = x.loc[[int(empl_id)]].values[0]
+        exp = explainer.explain_instance(choosen_instance, predict_fn_rf,num_features=10)
+        exp.show_in_notebook(show_all=False)
+        exp.save_to_file(settings.BASE_DIR+"/StaffTurnoverApp/static/"+str(empl_id)+".html")
 
-    dfCost = empl_data.tail(294)
-    print("This is DF cost-------",dfCost)
+        return empl_id
+
+    dfCost = empl_data.head(294)
     dfCost["predicted_values"] = y_predicted
-    # result_df = dfCost.iloc[dfCost.index, :]
+    dfCost['predicted_values'] = dfCost['predicted_values'].multiply(100)
 
-    # result_df["predicted_values"] = y_predicted
-    # result_df['predicted_values'] = result_df['predicted_values'].multiply(100)
-    #
-    #
     cost_percentage = 0.214
     cost_reduction = dfCost.apply(lambda row: (row.MonthlyIncome * 14) * cost_percentage, axis = 1)
     dfCost["cost_reduction"] = cost_reduction
+    df_complete = dfCost.head(50)
 
-    return dfCost, dfCost.head(20)
+    return dfCost

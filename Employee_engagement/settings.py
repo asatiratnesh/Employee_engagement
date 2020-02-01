@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'StaffTurnoverApp',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -85,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'empl_engagement_db',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': 3306,
         'OPTIONS': {
@@ -137,3 +138,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 MEDIA_ROOT  = os.path.join(BASE_DIR, 'StaffTurnoverApp/media/')
 MEDIA_URL = '/media/'
+
+# DEFAULT_FILE_STORAGE = 'storages.backends.overwrite.OverwriteStorage'
