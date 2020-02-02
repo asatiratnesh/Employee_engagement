@@ -17,24 +17,23 @@
           <thead>
             <tr>
               <th>Employee Number</th>
-              <th>Monthly Income</th>
-              <th>Total Working Years</th>
               <th>Job Role</th>
               <th>Age</th>
-              <th>Predicted values</th>
-              <th>Cost Reduction</th>
+              <th>Monthly Income<i>(in $)</i></th>
+              <th>Total Working Years</th>
+              <th>Trunover Probability</th>
+              <th>Cost to organization
+              </br><i>(in $)</i></th>
             </tr>
           </thead>
           <tbody>
               {% for key, data in df_top_five.items %}
-
                 <tr data-id="{{key}}" data-toggle="modal" data-target="#myModal">
-                  <td>{{key}}</td>
-                  <td>{{data.MonthlyIncome}}</td>
-                  <td>{{data.TotalWorkingYears}}</td>
+                  <td>HS1{{key}}</td>
                   <td>{{data.JobRole}}</td>
                   <td>{{data.Age}}</td>
-
+                  <td>$ {{data.MonthlyIncome}}</td>
+                  <td>{{data.TotalWorkingYears}}</td>
                   <td>
                     {% if data.predicted_values > 66 %}
                       <div class="progress">
@@ -57,7 +56,7 @@
                     {% endif %}
 
                   </td>
-                  <td>{{data.cost_reduction}}</td>
+                  <td><strong>$ {{data.cost_reduction}}</strong></td>
                 </tr>
               {% endfor %}
           </tbody>
@@ -68,7 +67,7 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Main Factor</h5>
+              <h5 class="modal-title">Employee Features Analysis</h5>
               <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body" >

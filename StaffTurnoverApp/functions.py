@@ -109,15 +109,12 @@ def limeGraph(empl_id=None):
     RF = model1.fit(x_train, y_train)
     score = model1.score(x_test, y_test)
     # y_predicted = RF.predict(x_test)
-    y_predicted = RF.predict_proba(x_test)[:,1]
-
-    sortignDF = x_test
-    sortignDF["y_predicted"] = y_predicted
+    y_predicted = RF.predict_proba(x)[:,1]
 
     if empl_id is not None:
         predict_fn_rf = lambda x: RF.predict_proba(x).astype(float)
-        X = x_train.values
-        explainer = lime.lime_tabular.LimeTabularExplainer(X,feature_names = x_train.columns,class_names=['No','Yes'],kernel_width=5)
+        X = x.values
+        explainer = lime.lime_tabular.LimeTabularExplainer(X,feature_names = x.columns,class_names=['No','Yes'],kernel_width=5)
         choosen_instance = x.loc[[int(empl_id)]].values[0]
         exp = explainer.explain_instance(choosen_instance, predict_fn_rf,num_features=10)
         exp.show_in_notebook(show_all=False)
@@ -125,7 +122,19 @@ def limeGraph(empl_id=None):
 
         return empl_id
 
-    dfCost = empl_data.head(294)
+    sortignDF = x
+    sortignDF["y_predicted"] = y_predicted
+
+    dfCost = x
+    csv_empl = pd.read_csv(settings.MEDIA_ROOT+"empl_data.csv")
+    dfCost["JobRole"] = csv_empl["JobRole"]
+    dfCost["Age"] = csv_empl["Age"]
+    dfCost["MonthlyIncome"] = csv_empl["MonthlyIncome"]
+    dfCost["TotalWorkingYears"] = csv_empl["TotalWorkingYears"]
+
+    print("scv valllllll   ", csv_empl["JobRole"])
+    print("222222222222222222222222222222222211111111   ", dfCost["JobRole"])
+
     dfCost["predicted_values"] = y_predicted
     dfCost['predicted_values'] = dfCost['predicted_values'].multiply(100)
 
@@ -134,4 +143,4 @@ def limeGraph(empl_id=None):
     dfCost["cost_reduction"] = cost_reduction
     df_complete = dfCost.head(50)
 
-    return dfCost
+    return df_complete
