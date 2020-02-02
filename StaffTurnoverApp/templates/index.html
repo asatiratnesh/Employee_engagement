@@ -38,77 +38,77 @@
               </div>
 
               <div class="col-md-4">
-                <label class="float-right" >DailyRate</label>
+                <label class="float-right" >Daily Rate</label>
               </div>
               <div class="col-md-6">
                 <div class="columns-dropdown"></div>
               </div>
 
               <div class="col-md-4">
-                <label class="float-right" >DistanceFromHome</label>
+                <label class="float-right" >Distance From Home</label>
               </div>
               <div class="col-md-6">
                 <div class="columns-dropdown"></div>
               </div>
 
               <div class="col-md-4">
-                <label class="float-right" >EnvironmentSatisfaction</label>
+                <label class="float-right" >Environment Satisfaction</label>
               </div>
               <div class="col-md-6">
                 <div class="columns-dropdown"></div>
               </div>
 
               <div class="col-md-4">
-                <label class="float-right">JobLevel</label>
+                <label class="float-right">Job Level</label>
               </div>
               <div class="col-md-6">
                 <div class="columns-dropdown"></div>
               </div>
 
               <div class="col-md-4">
-                <label class="float-right" >JobRole</label>
+                <label class="float-right" >Job Role</label>
               </div>
               <div class="col-md-6">
                 <div class="columns-dropdown"></div>
               </div>
 
               <div class="col-md-4">
-                <label class="float-right" >MaritalStatus</label>
+                <label class="float-right" >Marital Status</label>
               </div>
               <div class="col-md-6">
                 <div class="columns-dropdown"></div>
               </div>
 
               <div class="col-md-4">
-                <label class="float-right" >MonthlyIncome</label>
+                <label class="float-right" >Monthly Income</label>
               </div>
               <div class="col-md-6">
                 <div class="columns-dropdown"></div>
               </div>
 
               <div class="col-md-4">
-                <label class="float-right" >OverTime</label>
+                <label class="float-right" >Over Time</label>
               </div>
               <div class="col-md-6">
                 <div class="columns-dropdown"></div>
               </div>
 
               <div class="col-md-4">
-                <label class="float-right" >PercentSalaryHike</label>
+                <label class="float-right" >Percent Salary Hike</label>
               </div>
               <div class="col-md-6">
                 <div class="columns-dropdown"></div>
               </div>
 
               <div class="col-md-4">
-                <label class="float-right" >RelationshipSatisfaction</label>
+                <label class="float-right" >Relationship Satisfaction</label>
               </div>
               <div class="col-md-6">
                 <div class="columns-dropdown"></div>
               </div>
 
               <div class="col-md-4">
-                <label class="float-right" >TotalWorkingYears</label>
+                <label class="float-right" >Total Working Years</label>
               </div>
               <div class="col-md-6">
                 <div class="columns-dropdown"></div>
@@ -178,12 +178,14 @@
 
       document.getElementById("empTable").style.display = "flex";
       document.getElementById("autoselect").onclick = function(e){
-      e.preventDefault();
-      var $myParent=document.getElementsByTagName("select");
-      for ( i=0;i<=csv.length;i++) {
-        $myParent[i].options[i+1].defaultSelected = true;
-      }
-      return false;
+        e.preventDefault();
+        for ( i=0;i<columns_name.length;i++) {
+          console.log($("select:eq("+i+")").attr("name"));
+          console.log(columns_name[i].substr(0,1).toUpperCase() + columns_name[i].substr(1))
+          $("select:eq("+i+")").val(columns_name[i].substr(0,1).toUpperCase() + columns_name[i].substr(1))
+          // $myParent[i].options[i+1].defaultSelected = true;
+        }
+        return false;
       }
     }
   }
