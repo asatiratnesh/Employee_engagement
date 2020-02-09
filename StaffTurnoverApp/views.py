@@ -87,22 +87,23 @@ def employee(request):
 def saveEmpInfo(request):
     if request.method == 'POST':
         columns_mapping_dict = {}
-        columns_mapping_dict["age"] = request.POST['age']
-        columns_mapping_dict["dailyRate"] = request.POST['dailyRate']
-        columns_mapping_dict["distanceFromHome"] = request.POST['distanceFromHome']
-        columns_mapping_dict["environmentSatisfaction"] = request.POST['environmentSatisfaction']
-        columns_mapping_dict["jobLevel"] = request.POST['jobLevel']
-        columns_mapping_dict["jobRole"] = request.POST['jobRole']
-        columns_mapping_dict["maritalStatus"] = request.POST['maritalStatus']
-        columns_mapping_dict["monthlyIncome"] = request.POST['monthlyIncome']
-        columns_mapping_dict["overTime"] = request.POST['overTime']
-        columns_mapping_dict["percentSalaryHike"] = request.POST['percentSalaryHike']
-        columns_mapping_dict["relationshipSatisfaction"] = request.POST['relationshipSatisfaction']
-        columns_mapping_dict["totalWorkingYears"] = request.POST['totalWorkingYears']
-        emp_data_csv = request.FILES['employee_data']
-        emp_data_dataframe = pd.read_csv(emp_data_csv)
-        graphic = staffTurnoverResult(columns_mapping_dict, emp_data_dataframe)
-    return render(request, 'prediction_dashboard.html', {'graphic': graphic})
+        columns_mapping_dict["Age"] = request.POST['age']
+        columns_mapping_dict["DailyRate"] = request.POST['dailyRate']
+        columns_mapping_dict["DistanceFromHome"] = request.POST['distanceFromHome']
+        columns_mapping_dict["EnvironmentSatisfaction"] = request.POST['environmentSatisfaction']
+        columns_mapping_dict["JobLevel"] = request.POST['jobLevel']
+        columns_mapping_dict["JobRole"] = request.POST['jobRole']
+        columns_mapping_dict["MaritalStatus"] = request.POST['maritalStatus']
+        columns_mapping_dict["MonthlyIncome"] = request.POST['monthlyIncome']
+        columns_mapping_dict["OverTime"] = request.POST['overTime']
+        columns_mapping_dict["PercentSalaryHike"] = request.POST['percentSalaryHike']
+        columns_mapping_dict["RelationshipSatisfaction"] = request.POST['relationshipSatisfaction']
+        columns_mapping_dict["TotalWorkingYears"] = request.POST['totalWorkingYears']
+        columns_mapping_dict['Attrition'] = 'Yes'
+        data = pd.DataFrame(columns_mapping_dict, index=[0])
+        data_result = limeGraph(0, data)
+        print("cdffffff", data_result)
+    return render(request, 'empl_dashboard.html', {'data_result': data_result})
 
 
 def emplLimeGraph(request):

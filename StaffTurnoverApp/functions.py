@@ -16,48 +16,7 @@ from sklearn.model_selection import train_test_split
 
 
 #import squarify
-
-
 def staffTurnoverResult(columns_mapping_dict):
-    # ml code goed here
-    # df = emp_data
-    # df['Gender'].replace({'Male': 0, 'Female': 1},inplace = True)
-    # df['OverTime'].replace({'No': 0, 'Yes': 1},inplace = True)
-    #
-    # categorical_columns = ['BusinessTravel', 'Department', 'EducationField', "JobRole", "MaritalStatus"]
-    #
-    # df = pd.get_dummies(df, columns=categorical_columns)
-    #
-    # df.drop(["EmployeeNumber", "EmployeeCount", "Over18", "StandardHours","Attrition"], axis = 1, inplace = True)
-    #
-    # scaler = MinMaxScaler()
-    # df = pd.DataFrame(scaler.fit_transform(df), columns=df.columns)
-    #
-    # with open(settings.MEDIA_ROOT+"picklemodelRF.pkl", 'rb') as pickle_file:
-    #     model = pickle.load(pickle_file)
-    # predictionList = model.predict_proba(df)[:,1]
-    #
-    # result_df = emp_data.iloc[emp_data.index, :]
-    #
-    # result_df["predicted_values"] = predictionList
-    # result_df['predicted_values'] = result_df['predicted_values'].multiply(100)
-    #
-    # cost_percentage = 0.214
-    # cost_reduction = result_df.apply(lambda row: (row.MonthlyIncome * 14) * cost_percentage, axis = 1)
-    # result_df["cost_reduction"] = cost_reduction
-    #
-    # df_top_five = result_df.head(20)
-    #
-    # empl_count_per_job = {}
-    # job_roles = []
-    # for i in emp_data[columns_mapping_dict['jobRole']]:
-    #     if i in job_roles:
-    #         empl_count_per_job[i] = empl_count_per_job[i]+1
-    #     else:
-    #         job_roles.append(i)
-    #         empl_count_per_job[i] = 1
-    # treemap_empl_job = plotEmplVsJob(empl_count_per_job);
-
     return limeGraph()
 
 
@@ -79,39 +38,60 @@ def plotEmplVsJob(empl_count_per_job):
 
 
 
-def limeGraph(empl_id=None):
-    empl_data = pd.read_csv(settings.MEDIA_ROOT+"empl_data.csv")
-    df = empl_data
+def limeGraph(empl_id=None, data=None):
+    if data is not None:
+        print("4444444444444", data)
+        csv_empl = data
+    else:
+        csv_empl = pd.read_csv(settings.MEDIA_ROOT+"empl_data.csv")
+    df = csv_empl[["Age", "DailyRate", "DistanceFromHome", "EnvironmentSatisfaction", "JobLevel",
+      "JobRole", "MaritalStatus", "MonthlyIncome", "OverTime", "PercentSalaryHike", "RelationshipSatisfaction",
+      "TotalWorkingYears",'Attrition']]
+
     df['Attrition'].replace({'No': 0, 'Yes': 1},inplace = True)
-    df['Gender'].replace({'Male': 0, 'Female': 1},inplace = True)
+    # df['Gender'].replace({'Male': 0, 'Female': 1},inplace = True)
     df['OverTime'].replace({'No': 0, 'Yes': 1},inplace = True)
+    print("wwwwwww", df)
+
     lb_make = LabelEncoder()
-    df['BusinessTravel']=lb_make.fit_transform(df['BusinessTravel'].astype(str))
-    df['Department']=lb_make.fit_transform(df['Department'].astype(str))
-
-    df['EducationField']=lb_make.fit_transform(df['EducationField'].astype(str))
-
     df['JobRole']=lb_make.fit_transform(df['JobRole'].astype(str))
-
     df['MaritalStatus']=lb_make.fit_transform(df['MaritalStatus'].astype(str))
     # Removing unecessary features
-
-    df.drop(["EmployeeNumber", "EmployeeCount", "Over18", "StandardHours"], axis = 1, inplace = True)
     scaler = MinMaxScaler()
     df = pd.DataFrame(scaler.fit_transform(df), columns=df.columns)
     df.head()
-    x, y = df.drop(["Attrition"], axis = 1), df.Attrition
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state = 888)
-    # Random Forest
+    y1 = df.drop(["Attrition"], axis = 1)
 
-    model1 = RandomForestClassifier(n_estimators=10, criterion='gini', min_samples_split=2,
-                               oob_score=False, random_state=10)
-    RF = model1.fit(x_train, y_train)
-    score = model1.score(x_test, y_test)
-    # y_predicted = RF.predict(x_test)
-    y_predicted = RF.predict_proba(x)[:,1]
+
+    with open(settings.MEDIA_ROOT+"train_12model.pkl", 'rb') as pickle_file:
+         model = pickle.load(pickle_file)
+    y_predicted = model.predict_proba(y1)[:,1]
 
     if empl_id is not None:
+        print("33333333333333empl_idempl_id3", empl_id)
+
+        data_set = pd.read_csv(settings.MEDIA_ROOT+"WA_empl.csv")
+        data_set_col = data_set[["Age", "DailyRate", "DistanceFromHome", "EnvironmentSatisfaction", "JobLevel",
+          "JobRole", "MaritalStatus", "MonthlyIncome", "OverTime", "PercentSalaryHike", "RelationshipSatisfaction",
+          "TotalWorkingYears",'Attrition']]
+
+        data_set_col['Attrition'].replace({'No': 0, 'Yes': 1},inplace = True)
+        data_set_col['OverTime'].replace({'No': 0, 'Yes': 1},inplace = True)
+        lb_make = LabelEncoder()
+        data_set_col['JobRole']=lb_make.fit_transform(data_set_col['JobRole'].astype(str))
+        data_set_col['MaritalStatus']=lb_make.fit_transform(data_set_col['MaritalStatus'].astype(str))
+
+        scaler = MinMaxScaler()
+        data_set_col = pd.DataFrame(scaler.fit_transform(data_set_col), columns=data_set_col.columns)
+        data_set_col.head()
+        x, y = data_set_col.drop(["Attrition"], axis = 1), data_set_col.Attrition
+        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state = 888)
+        model1 = RandomForestClassifier(n_estimators=10, criterion='gini', min_samples_split=2,
+                                   oob_score=False, random_state=10)
+        RF = model1.fit(x_train, y_train)
+        x = x.append(y1)
+        x = x.iloc[len(y1.index):]
+
         predict_fn_rf = lambda x: RF.predict_proba(x).astype(float)
         X = x.values
         explainer = lime.lime_tabular.LimeTabularExplainer(X,feature_names = x.columns,class_names=['No','Yes'],kernel_width=5)
@@ -119,28 +99,14 @@ def limeGraph(empl_id=None):
         exp = explainer.explain_instance(choosen_instance, predict_fn_rf,num_features=10)
         exp.show_in_notebook(show_all=False)
         exp.save_to_file(settings.BASE_DIR+"/StaffTurnoverApp/static/"+str(empl_id)+".html")
-
         return empl_id
 
-    sortignDF = x
-    sortignDF["y_predicted"] = y_predicted
-
-    dfCost = x
-    csv_empl = pd.read_csv(settings.MEDIA_ROOT+"empl_data.csv")
-    dfCost["JobRole"] = csv_empl["JobRole"]
-    dfCost["Age"] = csv_empl["Age"]
-    dfCost["MonthlyIncome"] = csv_empl["MonthlyIncome"]
-    dfCost["TotalWorkingYears"] = csv_empl["TotalWorkingYears"]
-
-    print("scv valllllll   ", csv_empl["JobRole"])
-    print("222222222222222222222222222222222211111111   ", dfCost["JobRole"])
-
-    dfCost["predicted_values"] = y_predicted
-    dfCost['predicted_values'] = dfCost['predicted_values'].multiply(100)
+    print("333333333333333", data)
+    csv_empl["predicted_values"] = y_predicted
+    csv_empl['predicted_values'] = csv_empl['predicted_values'].multiply(100)
 
     cost_percentage = 0.214
-    cost_reduction = dfCost.apply(lambda row: (row.MonthlyIncome * 14) * cost_percentage, axis = 1)
-    dfCost["cost_reduction"] = cost_reduction
-    df_complete = dfCost.head(50)
-
+    cost_reduction = csv_empl.apply(lambda row: (row.MonthlyIncome * 14) * cost_percentage, axis = 1)
+    csv_empl["cost_reduction"] = cost_reduction
+    df_complete = csv_empl
     return df_complete

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <main role="main" class="container">
+      <div class="row">
+        <!-- <div class="col-md-6">
+          <div class="my-3 bg-white rounded box-shadow" width="100%">
+            <img src="data:image/png;base64,{{ graphic|safe }}">
+          </div>
+        </div> -->
+      </div>
+
+      <div class="my-3 bg-white rounded box-shadow">
+        <!-- {{data_result}} -->
+        <div id="lime-graph"></div>
+      </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    {% load static %}
+
+    <script type="text/javascript">
+      $('#lime-graph').load("/static/0.html");
+    </script>
+{% endblock %}
