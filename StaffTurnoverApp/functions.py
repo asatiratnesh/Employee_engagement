@@ -40,18 +40,23 @@ def plotEmplVsJob(empl_count_per_job):
 
 def limeGraph(empl_id=None, data=None):
     if data is not None:
-        print("4444444444444", data)
         csv_empl = data
     else:
         csv_empl = pd.read_csv(settings.MEDIA_ROOT+"empl_data.csv")
-    df = csv_empl[["Age", "DailyRate", "DistanceFromHome", "EnvironmentSatisfaction", "JobLevel",
-      "JobRole", "MaritalStatus", "MonthlyIncome", "OverTime", "PercentSalaryHike", "RelationshipSatisfaction",
-      "TotalWorkingYears",'Attrition']]
+
+    if 'AgeOfEMP' in csv_empl:
+        csv_empl.rename(columns = {'AgeOfEMP':'Age'}, inplace = True)
+        df = csv_empl[["Age", "DailyRate", "DistanceFromHome", "EnvironmentSatisfaction", "JobLevel",
+          "JobRole", "MaritalStatus", "MonthlyIncome", "OverTime", "PercentSalaryHike", "RelationshipSatisfaction",
+          "TotalWorkingYears",'Attrition']]
+    else:
+        df = csv_empl[["Age", "DailyRate", "DistanceFromHome", "EnvironmentSatisfaction", "JobLevel",
+          "JobRole", "MaritalStatus", "MonthlyIncome", "OverTime", "PercentSalaryHike", "RelationshipSatisfaction",
+          "TotalWorkingYears",'Attrition']]
 
     df['Attrition'].replace({'No': 0, 'Yes': 1},inplace = True)
     # df['Gender'].replace({'Male': 0, 'Female': 1},inplace = True)
     df['OverTime'].replace({'No': 0, 'Yes': 1},inplace = True)
-    print("wwwwwww", df)
 
     lb_make = LabelEncoder()
     df['JobRole']=lb_make.fit_transform(df['JobRole'].astype(str))
@@ -68,12 +73,16 @@ def limeGraph(empl_id=None, data=None):
     y_predicted = model.predict_proba(y1)[:,1]
 
     if empl_id is not None:
-        print("33333333333333empl_idempl_id3", empl_id)
-
         data_set = pd.read_csv(settings.MEDIA_ROOT+"WA_empl.csv")
-        data_set_col = data_set[["Age", "DailyRate", "DistanceFromHome", "EnvironmentSatisfaction", "JobLevel",
-          "JobRole", "MaritalStatus", "MonthlyIncome", "OverTime", "PercentSalaryHike", "RelationshipSatisfaction",
-          "TotalWorkingYears",'Attrition']]
+        if 'AgeOfEMP' in data_set:
+            data_set.rename(columns = {'AgeOfEMP':'Age'}, inplace = True)
+            data_set_col = data_set[["Age", "DailyRate", "DistanceFromHome", "EnvironmentSatisfaction", "JobLevel",
+              "JobRole", "MaritalStatus", "MonthlyIncome", "OverTime", "PercentSalaryHike", "RelationshipSatisfaction",
+              "TotalWorkingYears",'Attrition']]
+        else:
+            data_set_col = data_set[["Age", "DailyRate", "DistanceFromHome", "EnvironmentSatisfaction", "JobLevel",
+              "JobRole", "MaritalStatus", "MonthlyIncome", "OverTime", "PercentSalaryHike", "RelationshipSatisfaction",
+              "TotalWorkingYears",'Attrition']]
 
         data_set_col['Attrition'].replace({'No': 0, 'Yes': 1},inplace = True)
         data_set_col['OverTime'].replace({'No': 0, 'Yes': 1},inplace = True)
@@ -101,7 +110,6 @@ def limeGraph(empl_id=None, data=None):
         exp.save_to_file(settings.BASE_DIR+"/StaffTurnoverApp/static/"+str(empl_id)+".html")
         return empl_id
 
-    print("333333333333333", data)
     csv_empl["predicted_values"] = y_predicted
     csv_empl['predicted_values'] = csv_empl['predicted_values'].multiply(100)
 
@@ -109,5 +117,6 @@ def limeGraph(empl_id=None, data=None):
     cost_reduction = csv_empl.apply(lambda row: (row.MonthlyIncome * 14) * cost_percentage, axis = 1)
     csv_empl["cost_reduction"] = cost_reduction
     csv_empl["cost_reduction"] = csv_empl["cost_reduction"].round(decimals=2)
-    df_complete = csv_empl
+    # csv_empl.sort_values("cost_reduction", ascending=True)
+    df_complete = csv_empl.sort_values(by='cost_reduction', ascending=False)
     return df_complete

@@ -20,31 +20,32 @@
   </head>
 
   <body class="bg-light" data-gr-c-s-loaded="true">
+    <div style=" z-index: 1000;">
+      <nav class="navbar navbar-expand-md fixed-top navbar-dark">
+        <a class="navbar-brand" href="#">Pay<span class="yellow-tx"><i>Intel</i><span style="color: #fff;font-size: 13px;margin-left: 2px;margin-top: 8px;">(Beta)</span></span></a>
+        <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <nav class="navbar navbar-expand-md fixed-top navbar-dark">
-      <a class="navbar-brand" href="#">Pay<span class="yellow-tx"><i>Intel</i></span></a>
-      <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <!-- <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Dashboard <span class="sr-only">(current)</span></a>
-          </li>
-        </ul>
-      </div> -->
-    </nav>
-
-    <div class="nav-scroller bg-white box-shadow">
-      <nav class="nav nav-underline">
-        <a class="nav-link active" href="{% url 'index' %}">Organization</a>
-        <a class="nav-link" href="{% url 'employee' %}">Employee</a>
+        <!-- <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Dashboard <span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+        </div> -->
       </nav>
-    </div>
-    {% block content %}
-    {% endblock %}
 
+      <div class="nav-scroller bg-white box-shadow">
+        <nav class="nav nav-underline">
+          <a class="nav-link active" href="{% url 'index' %}">Organization</a>
+          <a class="nav-link" href="{% url 'employee' %}">Employee</a>
+        </nav>
+      </div>
+      {% block content %}
+      {% endblock %}
+    </div>
+    <div class="bg-theme" style=" background-image: url({% static 'img/bg1.png' %});"></div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

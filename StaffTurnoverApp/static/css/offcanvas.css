@@ -6,6 +6,24 @@ body {
 body {
   padding-top: 56px;
 }
+.bg-light{
+  background: #e9ecef !important;
+}
+.bg-theme{
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  left: -17%;
+  position: absolute;
+  top: 100px;
+  width: 100%;
+  height: 700px;
+  z-index: -10;
+  opacity: .8;
+}
+.bg-white{
+  background: #ffffffc7 !important;
+}
 .navbar-brand{
   font-family: cursive;
   font-weight: 600;
