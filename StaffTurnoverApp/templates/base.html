@@ -10,11 +10,10 @@
 
     <title>Hackathon</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/offcanvas/">
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/offcanvas.css' %}" rel="stylesheet">
@@ -23,7 +22,7 @@
   <body class="bg-light" data-gr-c-s-loaded="true">
 
     <nav class="navbar navbar-expand-md fixed-top navbar-dark">
-      <a class="navbar-brand" href="#">Pay<span class="yellow-tx"><i>Reap</i></span></a>
+      <a class="navbar-brand" href="#">Pay<span class="yellow-tx"><i>Intel</i></span></a>
       <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -49,7 +48,9 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="{% static 'js/d3.v3.js' %}"></script>
+
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/holder.min.js' %}"></script>
