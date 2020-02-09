@@ -108,5 +108,6 @@ def limeGraph(empl_id=None, data=None):
     cost_percentage = 0.214
     cost_reduction = csv_empl.apply(lambda row: (row.MonthlyIncome * 14) * cost_percentage, axis = 1)
     csv_empl["cost_reduction"] = cost_reduction
+    csv_empl["cost_reduction"] = csv_empl["cost_reduction"].round(decimals=2)
     df_complete = csv_empl
     return df_complete

@@ -180,10 +180,13 @@
       document.getElementById("autoselect").onclick = function(e){
         e.preventDefault();
         for ( i=0;i<columns_name.length;i++) {
-          console.log($("select:eq("+i+")").attr("name"));
-          console.log(columns_name[i].substr(0,1).toUpperCase() + columns_name[i].substr(1))
-          $("select:eq("+i+")").val(columns_name[i].substr(0,1).toUpperCase() + columns_name[i].substr(1))
-          // $myParent[i].options[i+1].defaultSelected = true;
+          if((i==0) && (csv[i] == "AgeOfEMP")){
+            $("select:eq("+i+")").val("AgeOfEMP")
+          }
+          else{
+            $("select:eq("+i+")").val(columns_name[i].substr(0,1).toUpperCase() + columns_name[i].substr(1))
+            // $myParent[i].options[i+1].defaultSelected = true;
+          }
         }
         return false;
       }
