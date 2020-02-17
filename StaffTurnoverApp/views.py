@@ -32,11 +32,16 @@ def saveUserInfo(request):
         columns_mapping_dict["relationshipSatisfaction"] = request.POST['relationshipSatisfaction']
         columns_mapping_dict["totalWorkingYears"] = request.POST['totalWorkingYears']
 
+        is_our_model = request.POST['selectModal']
         emp_data_csv = request.FILES['employee_data']
         emp_data_dataframe = pd.read_csv(emp_data_csv)
         default_storage.delete("empl_data.csv")
         file_name = default_storage.save("empl_data.csv", emp_data_csv)
-        df_top_five = staffTurnoverResult(columns_mapping_dict)
+        if is_our_model=="yes":
+            df_top_five = staffTurnoverResult(columns_mapping_dict)
+        elif is_our_model=="no":
+            df_top_five=staffTurnoverOwnResult(columns_mapping_dict)
+
         # emp_data= EmplData()
         # for row in reader:
         #         empl_data = EmplData.objects.create(

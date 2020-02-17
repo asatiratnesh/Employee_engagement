@@ -23,6 +23,10 @@
               <input class="input100" type="text" name="organization">
               <span class="focus-input100" data-placeholder="Organization Name"></span>
             </div>
+            <div class="wrap-input100 validate-input" data-validate="select Employee data">
+              <input class="input50" id="trainModel" value="yes" type="radio" name="selectModal" checked> Use Trained Model
+              <input class="input50" id="ownModel" value="no" type="radio" name="selectModal"> Train your Data/Model
+            </div>
             <div class="wrap-input100 validate-input" data-validate="Select CSV file">
               <input class="input100 input200" id="uploadEmp" type="file" accept=".csv" name="employee_data">
               <span class="file-name"></span>
@@ -30,6 +34,7 @@
             </div>
 
             <div id="empTable" class="row" style='display:none;'>
+
               <div class="col-md-4">
                 <label class="float-right" >Age</label>
               </div>
@@ -113,7 +118,8 @@
               <div class="col-md-6">
                 <div class="columns-dropdown"></div>
               </div>
-              <div class="col-md-4 offset-md-8 container-login100-form-btn">
+
+              <div class="col-md-4 offset-md-8 container-login100-form-btn" id="autoselectParent">
                 <div class="wrap-login100-form-btn">
                 <div class="login100-form-bgbtn"></div>
                 <button type="button" id="autoselect" class="login100-form-btn">Auto Map</button>
@@ -150,7 +156,21 @@
        reader.onload = function (event) {
          var csvData = event.target.result;
          var parsedCSV = d3.csv.parseRows(csvData);
+
+         if (document.getElementById("ownModel").checked ==true){
+         var dropdownElement= '<div class="col-md-4" id="attritionLabel"><label class="float-right" >Target Field</label></div><div class="col-md-6" id="attritionField"><div class="columns-dropdown"></div></div>'
+        var temp = document.createElement('div');
+        temp.innerHTML = dropdownElement;
+        var htmlObject = temp.firstChild;
+        var htmlObject1 = temp.lastChild;
+         var my_elem = document.getElementById('autoselectParent');
+         my_elem.parentNode.insertBefore(htmlObject, my_elem);
+         my_elem.parentNode.insertBefore(htmlObject1, my_elem);
          createForm(parsedCSV[0]);
+         }
+         else{
+         createForm(parsedCSV[0]);
+         }
        }
      }
 

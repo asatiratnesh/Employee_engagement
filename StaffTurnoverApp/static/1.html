@@ -37088,25 +37088,25 @@
 /***/ })
 /******/ ]);
 //# sourceMappingURL=bundle.js.map </script></head><body>
-        <div class="lime top_div" id="top_divTU4Y440ORH4ZP5N"></div>
+        <div class="lime top_div" id="top_divI9KWO1B1B7N7Q6G"></div>
         
         <script>
-        var top_div = d3.select('#top_divTU4Y440ORH4ZP5N').classed('lime top_div', true);
+        var top_div = d3.select('#top_divI9KWO1B1B7N7Q6G').classed('lime top_div', true);
         
             var pp_div = top_div.append('div')
                                 .classed('lime predict_proba', true);
             var pp_svg = pp_div.append('svg').style('width', '100%');
-            var pp = new lime.PredictProba(pp_svg, ["No", "Yes"], [0.9, 0.1]);
+            var pp = new lime.PredictProba(pp_svg, ["No", "Yes"], [0.6, 0.4]);
             
         
         var exp_div;
             var exp = new lime.Explanation(["No", "Yes"]);
         
                 exp_div = top_div.append('div').classed('lime explanation', true);
-                exp.show([["OverTime <= 0.00", -0.07531197913746504], ["MaritalStatus <= 0.50", -0.050578280226810886], ["0.00 < JobLevel <= 0.25", -0.03960015295734804], ["0.00 < StockOptionLevel <= 0.33", -0.030442805167930045], ["PercentSalaryHike > 0.50", 0.020848147681452336], ["Department <= 0.50", -0.019193971040585296], ["NumCompaniesWorked <= 0.11", -0.01878320374779068], ["0.15 < TotalWorkingYears <= 0.25", -0.018778947335814762], ["JobSatisfaction <= 0.33", 0.01873229820638136], ["0.18 < YearsWithCurrManager <= 0.41", -0.017718701552417494]], 1, exp_div);
+                exp.show([["OverTime <= 0.00", -0.166561844536262], ["MonthlyIncome <= 0.10", 0.10795241457770664], ["JobLevel <= 0.00", 0.057113978461661954], ["MaritalStatus <= 0.50", -0.0512711554244183], ["DistanceFromHome > 0.46", 0.03955205959814986], ["DailyRate <= 0.26", 0.02895041148970703], ["0.67 < EnvironmentSatisfaction <= 1.00", -0.02845114033031361], ["PercentSalaryHike > 0.50", 0.018233757788663957], ["0.67 < RelationshipSatisfaction <= 1.00", -0.018213307686570895], ["TotalWorkingYears > 0.38", 0.013578093723129701]], 1, exp_div);
                 
         var raw_div = top_div.append('div');
-            exp.show_raw_tabular([["OverTime", "0.00", -0.07531197913746504], ["MaritalStatus", "0.50", -0.050578280226810886], ["JobLevel", "0.25", -0.03960015295734804], ["StockOptionLevel", "0.33", -0.030442805167930045], ["PercentSalaryHike", "0.86", 0.020848147681452336], ["Department", "0.50", -0.019193971040585296], ["NumCompaniesWorked", "0.11", -0.01878320374779068], ["TotalWorkingYears", "0.25", -0.018778947335814762], ["JobSatisfaction", "0.33", 0.01873229820638136], ["YearsWithCurrManager", "0.41", -0.017718701552417494]], 1, raw_div);
+            exp.show_raw_tabular([["OverTime", "0.00", -0.166561844536262], ["MonthlyIncome", "0.00", 0.10795241457770664], ["JobLevel", "0.00", 0.057113978461661954], ["MaritalStatus", "0.00", -0.0512711554244183], ["DistanceFromHome", "1.00", 0.03955205959814986], ["DailyRate", "0.00", 0.02895041148970703], ["EnvironmentSatisfaction", "1.00", -0.02845114033031361], ["PercentSalaryHike", "1.00", 0.018233757788663957], ["RelationshipSatisfaction", "1.00", -0.018213307686570895], ["TotalWorkingYears", "1.00", 0.013578093723129701]], 1, raw_div);
         
         </script>
         </body></html>
